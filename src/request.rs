@@ -1,6 +1,6 @@
 //!This module contains types and trait to abstract away the difference between various
 //! http client apis. By default, the traits are implemented by [reqwest](https://crates.io/crates/reqwest)
-//! types, although the traits are fairly straightforward to implement for most types.
+//! types, although the traits are fairly straightforward to implement for other http libraries.
 //! Users of this library should never need to use the methods of these traits themselves,
 //! although they may want to implement them for custom types.
 
