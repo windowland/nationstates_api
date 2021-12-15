@@ -1,7 +1,12 @@
 pub mod request;
 use lazy_static::lazy_static;
 lazy_static! {
-    pub static ref USER_AGENT: Option<String> = std::env::var("NS_USER_AGENT").ok();
+    static ref USER_AGENT: Option<String> = std::env::var("NS_USER_AGENT").ok();
+}
+///Returns the default user agent used by this script, if one exists.
+/// It is set via the `NS_USER_AGENT` environment variable.
+pub fn get_user_agent() -> Option<&'static str> {
+    USER_AGENT.as_deref()
 }
 
 #[cfg(test)]

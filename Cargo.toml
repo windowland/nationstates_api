@@ -2,7 +2,7 @@
 name = "nationstates_api"
 version = "0.1.0"
 edition = "2021"
-license = "mit"
+license = "MIT"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
@@ -10,3 +10,5 @@ serde = { version = "1", features = ["derive"] }
 quick-xml = { version = "0.22", features = ["serde"] }
 tokio = {version = "1", features = ["time"]}
 lazy_static = "1"
+bytes = "1"
+futures = "0.3"
