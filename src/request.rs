@@ -4,6 +4,9 @@
 //! Users of this library should never need to use the methods of these traits themselves,
 //! although they may want to implement them for custom types.
 
+use bytes::Bytes;
+use serde::Serialize;
+use std::future::Future;
 /// This trait is designed for use by http clients.
 pub trait Client {
     ///Error returned if the request fails.
@@ -35,9 +38,6 @@ pub trait RequestBuilder {
     /// Builds the request, returning an error if something went wrong when building.
     fn build(self) -> Result<Self::Built, Self::BuildError>;
 }
-use bytes::Bytes;
-use serde::Serialize;
-use std::future::Future;
 
 #[cfg(feature = "reqwest")]
 mod reqwest {
