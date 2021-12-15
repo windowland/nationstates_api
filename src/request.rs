@@ -55,7 +55,10 @@ mod reqwest {
         type Output = Pin<Box<dyn Future<Output = Result<Bytes, Self::Error>> + Send>>;
         type Builder = RequestBuilder;
         fn send(&self, request: Request) -> Self::Output {
-            Box::pin(self.execute(request).and_then(|r| r.bytes()))
+            Box::pin(
+                self.execute(request)
+                    .and_then(|r| async { r.error_for_status()?.bytes().await }),
+            )
         }
         fn get(&self, url: &str) -> Self::Builder {
             self.get(url)
