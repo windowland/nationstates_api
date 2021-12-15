@@ -6,3 +6,6 @@ license = "mit"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+serde = { version = "1", features = ["derive"] }
+quick-xml = { version = "0.22", features = ["serde"] }
+tokio = {version = "1", features = ["time"]}
