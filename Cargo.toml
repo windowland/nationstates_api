@@ -9,3 +9,4 @@ license = "mit"
 serde = { version = "1", features = ["derive"] }
 quick-xml = { version = "0.22", features = ["serde"] }
 tokio = {version = "1", features = ["time"]}
+lazy_static = "1"
