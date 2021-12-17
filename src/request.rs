@@ -10,7 +10,7 @@ use std::future::Future;
 /// This trait is designed for use by http clients.
 pub trait Client {
     ///Error returned if the request fails.
-    type Error;
+    type Error: StatusCode;
     ///Future returned by send.
     type Output: Future<Output = Result<Bytes, Self::Error>> + Unpin + Send;
     type Builder: RequestBuilder;
@@ -37,6 +37,12 @@ pub trait RequestBuilder {
     fn add_queries<S: Serialize>(self, query: &S) -> Self;
     /// Builds the request, returning an error if something went wrong when building.
     fn build(self) -> Result<Self::Built, Self::BuildError>;
+}
+///Trait for fetching an http status code from a type. Used to enable
+/// elegant error handling in the case of user error.
+pub trait StatusCode {
+    ///Gets the status code, if one exists.
+    fn status_code(&self) -> Option<u16>;
 }
 
 #[cfg(feature = "reqwest")]
@@ -75,6 +81,11 @@ mod reqwest {
         }
         fn build(self) -> Result<Self::Built, Self::BuildError> {
             self.build()
+        }
+    }
+    impl super::StatusCode for Error {
+        fn status_code(&self) -> Option<u16> {
+            self.status().map(|s| s.as_u16())
         }
     }
 }
