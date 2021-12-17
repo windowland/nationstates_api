@@ -1,3 +1,4 @@
+pub mod query;
 pub mod request;
 use lazy_static::lazy_static;
 lazy_static! {
