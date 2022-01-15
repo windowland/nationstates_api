@@ -11,6 +11,11 @@ impl<T: Query, U: Query> Query for And<T, U> {
     }
 }
 
+/// Represents an empty query string. If used by itself, it returns a set
+/// of default
+#[derive(Copy, Clone, Eq, PartialEq, Ord, PartialOrd, Debug, Hash)]
+pub struct None;
+
 ///trait representing a shard to be queried.
 pub trait Query {
     fn add_query<R: RequestBuilder>(builder: R) -> R;
