@@ -33,7 +33,7 @@ pub trait RequestBuilder {
     /// be reported when the request is built.
     fn add_header(self, name: &str, value: &str) -> Self;
     /// Adds serializable values to the query string. Should not panic, instead errors
-    /// be reported when the request is built.
+    /// should be reported when the request is built.
     fn add_queries<S: Serialize>(self, query: &S) -> Self;
     /// Builds the request, returning an error if something went wrong when building.
     fn build(self) -> Result<Self::Built, Self::BuildError>;
