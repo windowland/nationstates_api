@@ -10,7 +10,7 @@ pub fn get_user_agent() -> Option<&'static str> {
     USER_AGENT.as_deref()
 }
 ///Url of the nationstates api.
-pub const NS_URL: &str = "https://www.nationstates.net/cgi-bin/api.cgi";
+pub static NS_URL: &str = "https://www.nationstates.net/cgi-bin/api.cgi";
 #[cfg(test)]
 mod tests {
     #[test]
