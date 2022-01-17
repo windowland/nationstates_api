@@ -1,7 +1,9 @@
 mod client;
+mod error;
 pub mod query;
 pub mod request;
-pub use client::{NsClient, NsRequestBuilder};
+pub use client::{NsClient, NsRequest};
+pub use error::NsError;
 use lazy_static::lazy_static;
 lazy_static! {
     static ref USER_AGENT: Option<String> = std::env::var("NS_USER_AGENT").ok();

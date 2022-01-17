@@ -1,3 +1,4 @@
+use crate::NsError;
 use std::time::Duration;
 use tokio::time::{interval, Interval};
 #[derive(Debug)]
@@ -23,15 +24,15 @@ impl<C> NsClient<C> {
         NsClient { client, throttle }
     }
 }
-use crate::request::Client;
+use crate::request::{Client, RequestBuilder};
 impl<C: Client> NsClient<C> {
     ///creates a request builder requesting the specified queries.
     pub fn request_builder<Q>(
         &mut self,
         queries: Q,
-    ) -> NsRequestBuilder<'_, C, <C as Client>::Builder, Q> {
+    ) -> NsRequest<'_, C, <C as Client>::Builder, Q> {
         let builder = self.client.get(crate::NS_URL);
-        NsRequestBuilder {
+        NsRequest {
             client: self,
             builder,
             queries,
@@ -40,8 +41,40 @@ impl<C: Client> NsClient<C> {
 }
 /// A request that will be sent to query data from the api.
 #[derive(Debug)]
-pub struct NsRequestBuilder<'c, C, R, Q> {
+pub struct NsRequest<'c, C, B, Q> {
     client: &'c mut NsClient<C>,
-    builder: R,
+    builder: B,
     queries: Q,
+}
+use crate::query::Query;
+impl<'c, C: Client<Builder = B>, B: RequestBuilder, Q: Query> NsRequest<'c, C, B, Q> {
+    pub async fn send(self) -> Result<NsResponse<C::Response>, NsError<B::BuildError, C::Error>> {
+        self.send_with_user_agent(crate::get_user_agent().expect("User agent must be set."))
+            .await
+    }
+    pub async fn send_with_user_agent(
+        self,
+        user_agent: &str,
+    ) -> Result<NsResponse<C::Response>, NsError<B::BuildError, C::Error>> {
+        let NsRequest {
+            client,
+            builder,
+            queries,
+        } = self;
+        let builder = queries
+            .add_query(builder)
+            .add_header("User-Agent", user_agent);
+        client.throttle.tick().await;
+        let built = builder.build().map_err(NsError::BuildError)?;
+        let response = client
+            .client
+            .send(built)
+            .await
+            .map_err(NsError::SendError)?;
+        Ok(NsResponse { response: response })
+    }
+}
+
+pub struct NsResponse<R> {
+    response: R,
 }
