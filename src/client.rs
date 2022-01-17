@@ -71,7 +71,7 @@ impl<'c, C: Client<Builder = B>, B: RequestBuilder, Q: Query> NsRequest<'c, C, B
             .send(built)
             .await
             .map_err(NsError::SendError)?;
-        Ok(NsResponse { response: response })
+        Ok(NsResponse { response })
     }
 }
 
