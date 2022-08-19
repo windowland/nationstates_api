@@ -6,7 +6,6 @@ license = "MIT"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [features]
-default = ["reqwest"]
 [dependencies]
 serde = { version = "1", features = ["derive"] }
 quick-xml = { version = "0.22", features = ["serde"] }
@@ -15,4 +14,4 @@ lazy_static = "1"
 bytes = "1"
 thiserror = "1"
 futures = "0.3"
-reqwest = {version = "0.11", optional = true}
+reqwest = {version = "0.11"}
