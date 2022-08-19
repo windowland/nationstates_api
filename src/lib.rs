@@ -1,5 +1,6 @@
 mod client;
 mod error;
+pub use client::*;
 use lazy_static::lazy_static;
 lazy_static! {
     static ref USER_AGENT: Option<String> = std::env::var("NS_USER_AGENT").ok();
