@@ -48,6 +48,7 @@ pub struct NsRequest<'c, C, B, Q> {
 }
 use crate::query::Query;
 impl<'c, C: Client<Builder = B>, B: RequestBuilder, Q: Query> NsRequest<'c, C, B, Q> {
+    ///Sends the request with the default user
     pub async fn send(self) -> Result<NsResponse<C::Response>, NsError<B::BuildError, C::Error>> {
         self.send_with_user_agent(crate::get_user_agent().expect("User agent must be set."))
             .await

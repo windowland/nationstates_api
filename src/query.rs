@@ -12,7 +12,7 @@ impl<T: Query, U: Query> Query for And<T, U> {
 }
 
 /// Represents an empty query string. If used by itself, it returns a set
-/// of default
+/// of default values.
 #[derive(Copy, Clone, Eq, PartialEq, Ord, PartialOrd, Debug, Hash)]
 pub struct None;
 
