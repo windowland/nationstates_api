@@ -14,7 +14,10 @@ pub fn get_user_agent() -> Option<&'static str> {
     USER_AGENT.as_deref()
 }
 ///Url of the nationstates api.
-pub static NS_URL: &str = "https://www.nationstates.net/cgi-bin/api.cgi";
+pub const NS_URL: &str = "https://www.nationstates.net/cgi-bin/api.cgi";
+///The version of the api this crate supports.
+pub const API_VERSION: usize = 11;
+
 #[cfg(test)]
 mod tests {
     #[test]
