@@ -1,3 +1,4 @@
+mod census;
 mod client;
 mod error;
 mod nation;
