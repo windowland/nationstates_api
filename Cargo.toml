@@ -8,7 +8,7 @@ license = "MIT"
 [features]
 [dependencies]
 serde = { version = "1", features = ["derive"] }
-quick-xml = { version = "0.22", features = ["serde"] }
+quick-xml = { version = "0.23", features = ["serialize"] }
 tokio = {version = "1", features = ["time"]}
 lazy_static = "1"
 bytes = "1"
