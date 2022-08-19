@@ -1,5 +1,6 @@
 mod client;
 mod error;
+mod nation;
 pub use client::*;
 use lazy_static::lazy_static;
 lazy_static! {
